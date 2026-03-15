@@ -21,7 +21,7 @@ input, select{
 button{
     padding: 8px 12px;
     margin: 5px;
-    border: 4px solid dark green;
+    border: 4px solid red;
 }
 
 canvas{
@@ -40,12 +40,23 @@ canvas{
 
 <!-- Font selection dropdown -->
 <select id="fontSelect">
-    <option value="17px Georgia">Georgia</option>
-    <option value="17px Arial">Arial</option>
-    <option value="17px Verdana">Verdana</option>
-    <option value="17px 'Comic Sans MS', cursive">Comic Sans MS</option>
-    <option value="17px Tahoma">Tahoma</option>
+    <option value="Georgia">Georgia</option>
+    <option value="Arial">Arial</option>
+    <option value="Verdana">Verdana</option>
+    <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+    <option value="Tahoma">Tahoma</option>
+    <option value="'Courier New', monospace">Courier New</option>
+    <option value="'Times New Roman', serif">Times New Roman</option>
+    <option value="Impact, sans-serif">Impact</option>
+    <option value="'Lucida Console', monospace">Lucida Console</option>
+    <option value="'Palatino Linotype', serif">Palatino Linotype</option>
+    <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+    <option value="'Brush Script MT', cursive">Brush Script MT</option>
 </select>
+
+<!-- Font size slider -->
+<label for="fontSize">Font Size:</label>
+<input type="range" id="fontSize" min="10" max="100" value="17">
 
 <!-- Font color picker -->
 <input type="color" id="colorPicker" value="#ff0000">
@@ -74,7 +85,8 @@ let dy = 2;
 let running = false;
 
 // Current styles
-let font = "17px Georgia";
+let fontFamily = "Georgia";
+let fontSize = 17;
 let fontColor = "#ff0000";
 
 function start(){
@@ -84,9 +96,10 @@ function start(){
     running = true;
 }
 
-// Function to update live styles
+// Update live styles
 function updateStyles(){
-    font = document.getElementById("fontSelect").value;
+    fontFamily = document.getElementById("fontSelect").value;
+    fontSize = document.getElementById("fontSize").value;
     fontColor = document.getElementById("colorPicker").value;
 
     const mode = document.getElementById("modeSelect").value;
@@ -107,7 +120,7 @@ function draw(){
     if(running){
         updateStyles(); // Apply live updates
 
-        ctx.font = font;
+        ctx.font = `${fontSize}px ${fontFamily}`;
         ctx.fillStyle = fontColor;
         ctx.fillText(text,x,y);
 
@@ -118,7 +131,7 @@ function draw(){
             dx *= -1;
         }
 
-        if(y < 20 || y > canvas.height){
+        if(y < fontSize || y > canvas.height){
             dy *= -1;
         }
     }
