@@ -8,6 +8,7 @@ body{
     font-family: "Comic Sans MS", Comic Sans, cursive;
     text-align: center;
     background-color: white;
+    color: black;
 }
 
 input, select{
@@ -24,7 +25,7 @@ button{
 }
 
 canvas{
-    border: 5px solid green;
+    border: 1px solid green;
     background-color: white;
 }
 </style>
@@ -50,6 +51,12 @@ canvas{
 <!-- Font color picker -->
 <input type="color" id="colorPicker" value="#ff0000">
 
+<!-- Light/Dark mode toggle -->
+<select id="modeSelect">
+    <option value="light">Light Mode</option>
+    <option value="dark">Dark Mode</option>
+</select>
+
 <button onclick="start()">Start</button>
 
 <br><br>
@@ -69,33 +76,34 @@ let running = false;
 let font = "17px Georgia";
 let fontColor = "#ff0000";
 
-function randomColor(){
-    const r = Math.floor(Math.random()*255);
-    const g = Math.floor(Math.random()*255);
-    const b = Math.floor(Math.random()*255);
-    return `rgb(${r},${g},${b})`;
-}
-
 function start(){
     const name = document.getElementById("name").value;
     const note = document.getElementById("note").value;
     text = note + " " + name;
 
-    // Get selected font
+    // Get selected font and color
     font = document.getElementById("fontSelect").value;
-
-    // Get selected color
     fontColor = document.getElementById("colorPicker").value;
+
+    // Light/Dark mode affects only page background
+    const mode = document.getElementById("modeSelect").value;
+    if(mode === "dark"){
+        document.body.style.backgroundColor = "black";
+        document.body.style.color = "white";
+    } else {
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black";
+    }
 
     running = true;
 }
 
 function draw(){
+    // Keep canvas background always white
     ctx.fillStyle = "white";
-    ctx.fillRect(0,0,1000,500);
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
     if(running){
-        // Use chosen font and color
         ctx.font = font;
         ctx.fillStyle = fontColor;
         ctx.fillText(text,x,y);
