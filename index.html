@@ -53,9 +53,6 @@ canvas{
 
 <input type="color" id="colorPicker" value="#ff0000">
 
-<label>Font Size:</label>
-<input type="range" id="fontSize" min="1" max="100" value="30">
-
 <button onclick="start()">Start</button>
 
 <br><br>
@@ -73,7 +70,7 @@ let dx = 2;
 let dy = 2;
 let running = false;
 
-let fontSize = 30;
+const fontSize = 30;
 let fontFamily = "Georgia";
 let fontColor = "#ff0000";
 
@@ -92,7 +89,6 @@ function start(){
 function updateStyles(){
     fontFamily = document.getElementById("fontSelect").value;
     fontColor = document.getElementById("colorPicker").value;
-    fontSize = document.getElementById("fontSize").value;
 }
 
 function draw(){
